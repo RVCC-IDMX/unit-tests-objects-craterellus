@@ -62,7 +62,19 @@
  * then use the copied object like a lookup table
  */
 function getColorValue(color) {
-  // write your code here & return value
+  const colorCodes = {
+    black: 0,
+    brown: 1,
+    red: 2,
+    orange: 3,
+    yellow: 4,
+    green: 5,
+    blue: 6,
+    violet: 7,
+    grey: 8,
+    white: 9,
+  };
+  return colorCodes[color];
 }
 
 /**
@@ -79,7 +91,21 @@ function getColorValue(color) {
  * then use the copied object like a lookup table
  */
 function getMultiplierValue(color) {
-  // write your code here & return value
+  const multiplierCodes = {
+    black: 1,
+    brown: 10,
+    red: 100,
+    orange: 1000,
+    yellow: 10000,
+    green: 100000,
+    blue: 1000000,
+    violet: 10000000,
+    grey: 100000000,
+    white: 1000000000,
+    gold: 0.1,
+    silver: 0.01,
+  };
+  return multiplierCodes[color];
 }
 
 /**
@@ -106,7 +132,40 @@ function getMultiplierValue(color) {
  *
  */
 function getThreeBandValue(bands) {
-  // write your code here & return value
+  const multiplierCodes = {
+    black: 1,
+    brown: 10,
+    red: 100,
+    orange: 1000,
+    yellow: 10000,
+    green: 100000,
+    blue: 1000000,
+    violet: 10000000,
+    grey: 100000000,
+    white: 1000000000,
+    gold: 0.1,
+    silver: 0.01,
+  };
+  const colorCodes = {
+    black: 0,
+    brown: 1,
+    red: 2,
+    orange: 3,
+    yellow: 4,
+    green: 5,
+    blue: 6,
+    violet: 7,
+    grey: 8,
+    white: 9,
+  };
+  const value1 = bands.color1;
+  const value2 = bands.color2;
+  const value3 = bands.multiplier;
+  const color1 = colorCodes[value1];
+  const color2 = colorCodes[value2];
+  const multiply = multiplierCodes[value3];
+  const bandValue = ((color1 * 10) + color2) * multiply;
+  return bandValue;
 }
 
 /**
@@ -131,7 +190,19 @@ function getThreeBandValue(bands) {
  *
  */
 function formatNumber(val) {
-  // write your code here & return value
+  if (val >= 1000 && val < 1000000) {
+    const newval = `${val / 1000}k`;
+    return newval;
+  }
+  if (val >= 1000000 && val < 1000000000) {
+    const newval = `${val / 1000000}M`;
+    return newval;
+  }
+  if (val >= 1000000000 && val < 1000000000000) {
+    const newval = `${val / 1000000000}G`;
+    return newval;
+  }
+  return `${val}`;
 }
 
 /**
@@ -150,7 +221,17 @@ function formatNumber(val) {
  * example: 'green' => '±0.5%'
  */
 function getTolerance(color) {
-  // write your code here & return value
+  const colorTolerance = {
+    brown: '±1%',
+    red: '±2%',
+    green: '±0.5%',
+    blue: '±0.25%',
+    violet: '±0.1%',
+    grey: '±0.05%',
+    gold: '±5%',
+    silver: '±10%',
+  };
+  return colorTolerance[color];
 }
 
 /**
@@ -182,7 +263,10 @@ function getTolerance(color) {
  * must use functions in this file to build the string using a template literal
  */
 function getResistorOhms(bands) {
-  // write your code here & return value
+  const bigNumber = getThreeBandValue(bands);
+  const smallerNum = formatNumber(bigNumber);
+  const finalValue = `Resistor value: ${smallerNum} Ohms ${getTolerance(bands.tolerance)}`;
+  return finalValue;
 }
 
 module.exports = {
